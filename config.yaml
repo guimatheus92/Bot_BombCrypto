@@ -1,0 +1,129 @@
+#******************************* BombCrypto Bot *********************************#
+#────────────────────────────────────────────────────────────────────────────────#
+#─────██████████████───██████████████─██████──────────██████─██████████████──────#
+#─────██░░░░░░░░░░██───██░░░░░░░░░░██─██░░███────────███░░██─██░░░░░░░░░░██──────#
+#─────██░░██████░░██───██░░██████░░██─██░░░███──────███░░░██─██░░██████░░██──────#
+#─────██░░██──██░░██───██░░██──██░░██─██░░░░███────███░░░░██─██░░██──██░░██──────#
+#─────██░░██████░░████─██░░██──██░░██─██░░░░░░██──███░░░░░██─██░░██████░░████────#
+#─────██░░░░░░░░░░░░██─██░░██──██░░██─██░░░░██████████░░░░██─██░░░░░░░░░░░░██────#
+#─────██░░████████░░██─██░░██──██░░██─██░░░░██─████─██░░░░██─██░░████████░░██────#
+#─────██░░██────██░░██─██░░██──██░░██─██░░░░██──██──██░░░░██─██░░██────██░░██────#
+#─────██░░████████░░██─██░░██████░░██─██░░░░██──────██░░░░██─██░░████████░░██────#
+#─────██░░░░░░░░░░░░██─██░░░░░░░░░░██─██░░░░██──────██░░░░██─██░░░░░░░░░░░░██────#
+#─────████████████████─██████████████─████████──────████████─████████████████────#
+#────────────────────────────────────────────────────────────────────────────────#
+#********************************************************************************#
+#***************** Please donate to help improve the hard work ♥ ****************#
+#********************************************************************************#
+#**** BUSD/BCOIN/ETH/BNB (BEP20): 0xf1e43519fca44d9308f889baf99531ed0de903fc ****#
+#**** PayPal: https://www.paypal.com/donate/?hosted_button_id=82CABN6CYVG6U *****#
+#****************** Pix: 42a762ed-e6ec-4059-a88e-f168b9fbc63f *******************#
+#********************************************************************************#
+
+# [en]
+# ---- Configurations related to bot ----
+bot_options:
+  # [en]
+  # ---- Delete log files ----
+  # Default value: True
+  # Available options:
+  # True = Create log files
+  # False = Don't create log files
+  create_logfiles: True
+
+  # [en]
+  # ---- Delete log files ----
+  # Default value: False
+  # Available options:
+  # True = Delete all log files unless today's date
+  # False = Keep all log files unless today's date
+  delete_old_logfiles: False
+
+  # [en]
+  # ---- Delete log files ----
+  # Default value: False
+  # Available options:
+  # True = Delete all old folders unless today's date
+  # False = Keep all old folders unless today's date
+  delete_old_folders: False
+
+  # [en]
+  # ---- Open the web browser automatically ----
+  # Default value: False
+  # Available options:
+  # True = Open web browser automatically when you set the name
+  # False = Don't open web browser automatically when you set the name
+  open_browser_automatically: False
+
+  metamask_options:
+    # [en]
+    # ---- Enable login in Metamask ----
+    # Default value: False
+    # Available options:
+    # True = Enable login in Metamask when locked
+    # False = Don't enable bot to login in Metamask when locked
+    enable_login_metamask: False
+
+    # [en]
+    # ---- Metamask Password ----
+    # Default value: Null
+    metamask_password: Null
+
+# [en]
+# ---- Configurations related to telegram ----
+telegram_options:
+
+  # [en]
+  # ---- Telegram integration with log files ----
+  # Default value: False
+  # Available options:
+  # True = Use telegram to receive messages according log process
+  # False = Don't use telegram to receive messages according log process
+  telegram_integration: False
+
+  # [en]
+  # ---- Telegram token ----
+  # Default value: Null
+  telegram_token: Null
+
+  # [en]
+  # ---- Telegram chat id ----
+  # Default value: Null
+  # If you don't know the chat id, it'll retrieve automatically
+  # It's not possible to retrieve chat id, if telegram token is null
+  telegram_chatid: Null
+
+
+# [en]
+# ---- Configurations related to heroes ----
+heroes_options:
+  # [en]
+  # ---- Send heroes to work ----
+  # Default value: all
+  # Available options:
+  # all   = Select all heroes (regardless of the stamina bar and the rarity)
+  work_heroes_options: "all"
+
+  # [en]
+  # ---- Time to send heroes to work ----
+  # Default value: 15 (minutes)
+  # Available options:
+  # Any value starting from 1
+  # Remember to set a different time from the option [refresh_heroes_time]
+  work_heroes_time: 15
+
+  # [en]
+  # ---- Refresh heroes position only ----
+  # Default value: False
+  # Available options:
+  # True = Keep refreshing heroes position
+  # False = Don't keep refreshing heroes position, and do all the process correctly
+  refresh_heroes_only: False
+
+  # [en]
+  # ---- Refresh heroes position time ----
+  # Default value: 5 (minutes)
+  # Available options:
+  # Any value starting from 1
+  # Remember to set a different time from the option [work_heroes_time]
+  refresh_heroes_time: 5
