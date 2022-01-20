@@ -36,10 +36,7 @@ O tutorial para instalar e usar esse bot pode ser encontrado aqui [GitHub Wiki](
 
 ## Atualizações
 
-- **16/04/2021**:
-	- Created subfolders `js` and `css` inside `static` folder
-	- I inserted the user's full name in the dropdown-menu
-- **18/01/2022**: Lançado a primeira versão sem multiplas contas
+- **19/01/2022**: Lançado a primeira versão sem multiplas contas
 
 ## Requisitos
 
@@ -70,7 +67,7 @@ Escala do monitor: `100%`
 
 ## Observações
 
-- Verifique o tópico de requisitos para ter certeza em qual ambiente e versões nós sabemos que funciona.
+- Verifique o tópico de [Requisitos](https://github.com/guimatheus92/Bot_BombCrypto/blob/main/README.pt.md#requisitos "Requisitos") para ter certeza em qual ambiente e versões nós sabemos que funciona.
 - Todas as images foram tiradas do jogo de uma tela Full HD e a escala selecionada em 100%. Caso seu bot não esteja funcionando, certifique-se que a escala do seu monitor também esteja em 100%. Após isso, salve todas as imagens novamente e salve elas com o formato `.png`.
 
 ## Funcionalidades
