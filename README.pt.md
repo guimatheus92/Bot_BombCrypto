@@ -20,21 +20,21 @@ Se você achou que esse bot foi uma ajuda para você, por favor faça uma doaç�
 ## Project structure
     .
     └── Bot_BombCrypto
-        ├── main.py                     # inicia nosso app
-        ├── bot.py                       # todos os movimentos e mecânicas para o bot
-        ├── controllers.py           # todos os controles para ajudar o bot a rodar
-        ├── config.yaml              # todas as configurações para ajudar o bot a rodar
-        └── logs                          # todos os arquivos log são salvos aqui
+        ├── main.py                    # inicia nosso app
+        ├── bot.py                     # todos os movimentos e mecânicas para o bot
+        ├── controllers.py             # todos os controles para ajudar o bot a rodar
+        ├── config.yaml                # todas as configurações para ajudar o bot a rodar
+        └── logs                       # todos os arquivos log são salvos aqui
         └── static
             ├── img
-                ├── game                # todas as imagens relacionadas ao jogo estarão aqui
+                ├── game               # todas as imagens relacionadas ao jogo estarão aqui
                 ├── readme             # todas as imagens relacionadas ao repositório
 
 ## Tutorial
 
 O tutorial para instalar e usar esse bot pode ser encontrado aqui [GitHub Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "GitHub Wiki").
 
-##### Algumas configurações podem ser alteradas no arquivo config.yaml. Caso mude, não se esqueça de reiniciar o bot para que as novas configurações sejam ativadas.
+#### Algumas configurações podem ser alteradas no arquivo config.yaml. Caso mude, não se esqueça de reiniciar o bot para que as novas configurações sejam ativadas.
 
 ## Atualizações
 
