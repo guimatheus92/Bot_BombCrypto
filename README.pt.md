@@ -32,7 +32,7 @@ Se você achou que esse bot foi uma ajuda para você, por favor faça uma doaç�
 
 ## Tutorial
 
-O tutorial para esse bot pode ser encontrado aqui [GitHub Wiki]( "GitHub Wiki").
+O tutorial para instalar e usar esse bot pode ser encontrado aqui [GitHub Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "GitHub Wiki").
 
 ## Atualizações
 
@@ -91,6 +91,6 @@ Escala do monitor: `100%`
 ## Conclusão
 
 1. Quer o meu código? [Pegue aqui](https://github.com/guimatheus92/Bot_BombCrypto "Grab it here") 📎
-2. Quer o tutorial de como usa-lo? [Vá para o Wiki]( "Go to here") ✔️
+2. Quer o tutorial de como usa-lo? [Vá para o Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "Go to here") ✔️
 3. Novas ideias para este app? Me ajuda a melhora-lo ❤️
 4. Quer algo mais adicionado neste tutorial? Crie uma Issu no repositório ⚠️
