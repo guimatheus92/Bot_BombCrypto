@@ -67,7 +67,7 @@ Monitor scale: `100%`
 
 ## Observations
 
-- Check requirements topic to make sure in what environment and versions we know that it works.
+- Check [Requirements](https://github.com/guimatheus92/Bot_BombCrypto#requirements "Requirements") topic to make sure in what environment and versions we know that it works.
 - All images taken from the game was from a Full HD screen and scale at 100%. So if your bot is not working, make sure that your scale is at least 100%. After that, get all pictures again and save them as `.png` format.
 
 ## Features
