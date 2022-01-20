@@ -21,18 +21,20 @@ If you find this bot helpful to you, please donate so we can continue to improve
     .
     └── Bot_BombCrypto
         ├── main.py                     # setup our app
-        ├── bot.py                       # all bot movements
-        ├── controllers.py           # all controllers to help the bot to run
-        ├── config.yaml              # all configurations and options to run
-        └── logs                          # all log files are saved daily here
+        ├── bot.py                      # all bot movements
+        ├── controllers.py              # all controllers to help the bot to run
+        ├── config.yaml                 # all configurations and options to run
+        └── logs                        # all log files are saved daily here
         └── static
             ├── img
                 ├── game                # all images related to game to run the bot
-				├── readme             # all images related to repository
+                ├── readme              # all images related to repository
 
 ## Tutorial
 
 The tutorial on how to install and use this bot can be found on [GitHub Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "GitHub Wiki") page.
+
+##### Some settings can be changed in the config.yaml file. If you change it, don't forget to restar the bot so that the new settings are activated.
 
 ## Changelog
 
