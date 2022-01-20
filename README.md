@@ -1,6 +1,6 @@
 # BombCrypto Bot
 
-- [en-us] For change to english Readme version click [here](https://github.com/guimatheus92/Bot_BombCrypto/edit/main/README.md "here").
+- [en-us] For change to english Readme version click [here](https://github.com/guimatheus92/Bot_BombCrypto/blob/main/README.md "here").
 - [pt-br] Para alterar para a versão Readme em português, clique [aqui](https://github.com/guimatheus92/Bot_BombCrypto/blob/main/README.pt.md "aqui").
 
 ------------
