@@ -34,6 +34,8 @@ Se você achou que esse bot foi uma ajuda para você, por favor faça uma doaç�
 
 O tutorial para instalar e usar esse bot pode ser encontrado aqui [GitHub Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "GitHub Wiki").
 
+##### Algumas configurações podem ser alteradas no arquivo config.yaml. Caso mude, não se esqueça de reiniciar o bot para que as novas configurações sejam ativadas.
+
 ## Atualizações
 
 - **19/01/2022**: Lançado a primeira versão sem multiplas contas
