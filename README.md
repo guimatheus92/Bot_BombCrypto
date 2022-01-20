@@ -34,7 +34,7 @@ If you find this bot helpful to you, please donate so we can continue to improve
 
 The tutorial on how to install and use this bot can be found on [GitHub Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "GitHub Wiki") page.
 
-##### Some settings can be changed in the config.yaml file. If you change it, don't forget to restar the bot so that the new settings are activated.
+#### Some settings can be changed in the config.yaml file. If you change it, don't forget to restar the bot so that the new settings are activated.
 
 ## Changelog
 
