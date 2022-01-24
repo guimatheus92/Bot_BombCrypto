@@ -38,6 +38,10 @@ O tutorial para instalar e usar esse bot pode ser encontrado aqui [GitHub Wiki](
 
 ## Atualizações
 
+- **24/01/2022**:
+ 	- Ajustado a função para obter chat_id do telegram
+	- Ajustado o bot quando o usuário não deseja usar o telegram
+	- Ajustado a função de desbloquear metamask
 - **19/01/2022**: Lançado a primeira versão sem multiplas contas
 
 ## Requisitos
