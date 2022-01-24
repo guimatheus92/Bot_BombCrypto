@@ -5,7 +5,7 @@ import asyncio
 import numpy as np
 from random import randint
 from datetime import datetime
-from controllers import setup_logger, take_screenshot, read_configurations, run_once
+from controllers import setup_logger, take_screenshot, read_configurations
 
 try:
     streamConfig = read_configurations()
@@ -112,9 +112,9 @@ async def unlock_metamask():
                                 # Open Metamask icon
                                 await asyncio.create_task(open_metamask())
                                 return
-            elif enable_login_metamask != True:
-                logger.warning('The "enable_login_metamask" option is set to False, so it is not possible to unlock Metamask automatically, unless you change the option to True. Unlock Metamask manually first! Exiting bot..')
-                exit()
+                    elif enable_login_metamask != True:
+                        logger.warning('The "enable_login_metamask" option is set to False, so it is not possible to unlock Metamask automatically, unless you change the option to True. Unlock Metamask manually first! Exiting bot..')
+                        exit()
 
 async def agree_metamask():
     '''

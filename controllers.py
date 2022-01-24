@@ -95,29 +95,29 @@ def get_telegram_chat_id():
     It's not possible to retrieve chat id, if telegram token is None
     '''
     
-    if telegram_chatid is None:
-        url = 'https://api.telegram.org/bot' + str(telegram_token) + '/getUpdates'    
-        response = requests.request("GET", url)
-        telegram_response = json.loads(response.text)
-        chat_id = telegram_response['result'][0]['message']['chat']['id']
-        return chat_id
+    try:
+        if telegram_chatid is None:
+            url = 'https://api.telegram.org/bot' + str(telegram_token) + '/getUpdates'
+            response = requests.request("GET", url)
+            telegram_response = json.loads(response.text)
+            chat_id = telegram_response['result'][0]['message']['chat']['id']
+            return chat_id
+    except:
+        print('Telegram chat id not found! Make sure to send at least any message to your bot on Telegram, so the endpoint from API might work corectly! Exiting bot..')
+        os._exit(0)
 
 def send_telegram_msg(message):
     '''
     Function to send Telegram message
     '''
+    if telegram_integration != False:
+        if telegram_chatid is None:
+            chat_id = get_telegram_chat_id()
+        else:
+            chat_id = telegram_chatid
 
-    if telegram_chatid is None:
-        chat_id = get_telegram_chat_id()
-    else:
-        chat_id = telegram_chatid
-
-    TelegramBot = start_telegram()    
-    TelegramBot.send_message(text=message, chat_id=chat_id)
-
-# Function to send Telegram pictures
-def SendTelegramPic():
-    print(True)
+        TelegramBot = start_telegram()    
+        TelegramBot.send_message(text=message, chat_id=chat_id)
         
 def take_screenshot(folder='', sub_folder='', info = ''):
     '''
@@ -190,13 +190,14 @@ async def setup_logger(telegram_integration=False):
     consolehandler = logging.StreamHandler()
     consolehandler.setFormatter(formatter)
  
-    class TelegramHandler(logging.Handler):
+    if telegram_integration != False:
+        class TelegramHandler(logging.Handler):
 
-        def emit(self, record):
-            message = self.format(record)
-            send_telegram_msg(message)
-            # send_telegram_msg(message, record.levelno)    # Passing level
-            # send_telegram_msg(message, record.levelname)  # Passing level name
+            def emit(self, record):
+                message = self.format(record)
+                send_telegram_msg(message)
+                # send_telegram_msg(message, record.levelno)    # Passing level
+                # send_telegram_msg(message, record.levelname)  # Passing level name
 
     logger = logging.getLogger('logs')
     if logger.hasHandlers():

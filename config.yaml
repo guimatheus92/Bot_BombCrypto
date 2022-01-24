@@ -47,14 +47,6 @@ bot_options:
   # False = Keep all old folders unless today's date
   delete_old_folders: False
 
-  # [en]
-  # ---- Open the web browser automatically ----
-  # Default value: False
-  # Available options:
-  # True = Open web browser automatically when you set the name
-  # False = Don't open web browser automatically when you set the name
-  open_browser_automatically: False
-
   metamask_options:
     # [en]
     # ---- Enable login in Metamask ----
