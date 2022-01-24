@@ -38,6 +38,10 @@ The tutorial on how to install and use this bot can be found on [GitHub Wiki](ht
 
 ## Changelog
 
+- **24/01/2022**:
+ 	- Fixed function to get chat_id from telegram
+	- Fixed bot when the user doesn't want to use telegram
+	- Fixed unlock metamask function
 - **19/01/2022**: Released the first version of bot without multiaccount
 
 ## Requirements
