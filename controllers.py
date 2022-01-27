@@ -243,48 +243,47 @@ def get_browser():
     # Get all profiles from Brave web browser
     profiles = multiaccount_names
     if enable_multiaccount != False:
-        logger.info(str("Profiles selected: " + '%s' % ', '.join(map(str, profiles))))
+        logger.info(str("Profiles selected: " + '%s' % ', '.join(map(str, profiles))))    
+        if not profiles:
+            logger.error("Please type the profile names correctly in the file config.yaml before running this bot! Exiting bot..")
+            os._exit(0)
+    
+    if enable_multiaccount != False:
+        # Get all windows opens
+        windows = Desktop(backend="uia").windows()
+        window = [w.window_text() for w in windows]
+        # Create a dataframe in order to store the windows needed
+        df_windows = pd.DataFrame(window, columns =['WebBrowser'])
+        # Filter dataframe only to show all windows from Brave web browser
+        df_windows = df_windows.loc[df_windows['WebBrowser'].str.contains("Brave", case=False)]
+        # Add column key to find profile
+        df_windows['Key'] = df_windows['WebBrowser'].str.replace(' ','').str.strip()
+        # Add column profile from Brave
+        df_windows['Profile'] = df_windows['Key'].str.split('Bombcrypto-Brave').str[1].str.replace(':','').replace('-','').str.strip()
+        # Add column about the website open from Brave
+        df_windows['Website'] = df_windows['WebBrowser'].str.split().str[0].str.strip()
+        # Filter dataframe only to show all bombcrypto game window
+        df_windows = df_windows.loc[df_windows['Website'] == 'Bombcrypto']
+        
+        applications = []
+        website_browser = []
 
-    if not profiles:
-        logger.error("Please type the profile names correctly in the file config.yaml before running this bot! Exiting bot..")
-        os._exit(0)
+        try:
+            for profile in df_windows['Profile']:
+                if profile in profiles:
+                    website = df_windows.loc[df_windows.Profile==profile,'WebBrowser'].values[0]                
+                    applications.append([website, profile])
+
+            bomb = df_windows.loc[df_windows.Website=='Bombcrypto','Website'].values[0]
+            website_browser.append(bomb)
+        except:
+            pass
+        
+        return applications, website_browser
     else:
-        if enable_multiaccount != False:
-            # Get all windows opens
-            windows = Desktop(backend="uia").windows()
-            window = [w.window_text() for w in windows]
-            # Create a dataframe in order to store the windows needed
-            df_windows = pd.DataFrame(window, columns =['WebBrowser'])
-            # Filter dataframe only to show all windows from Brave web browser
-            df_windows = df_windows.loc[df_windows['WebBrowser'].str.contains("Brave:", case=False)]
-            # Add column profile from Brave
-            df_windows['Profile'] = df_windows['WebBrowser'].str.split(':').str[1].str.strip()
-            # Add column window open from Brave
-            df_windows['Window'] = df_windows['WebBrowser'].str.split(':').str[0].str.strip()
-            # Add column about the website open from Brave
-            df_windows['Website'] = df_windows['Window'].str.replace(" - Brave", "").str.strip()
-            # Filter dataframe only to show all bombcrypto game window
-            df_windows = df_windows.loc[df_windows['Website'] == 'Bombcrypto']
-            
-            applications = []
-            website_browser = []
-
-            try:
-                for profile in df_windows['Profile']:
-                    if profile in profiles:
-                        website = df_windows.loc[df_windows.Profile==profile,'WebBrowser'].values[0]                
-                        applications.append([website, profile])
-
-                bomb = df_windows.loc[df_windows.Website=='Bombcrypto','Website'].values[0]
-                website_browser.append(bomb)
-            except:
-                pass
-            
-            return applications, website_browser
-        else:
-            applications = [['Bot', 'BCOIN', 'None']]
-            website_browser = ['Bombcrypto']
-            return applications, website_browser
+        applications = [['Bot', 'BCOIN', 'None']]
+        website_browser = ['Bombcrypto']
+        return applications, website_browser
 
 async def countdown_timer():
     '''
