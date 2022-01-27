@@ -87,11 +87,13 @@ Python 3.9.9
 Os requisitos também podem ser encontrados no arquivo `requirements.txt`.
 Este projeto utiliza os seguintes requisitos:
 
-    APScheduler==3.6.3
+    ﻿APScheduler==3.6.3
     asyncio==3.4.3    
     numpy==1.21.4
+    opencv-python==4.5.4.60
     pandas==1.1.5
     pathlib==1.0.1
+    Pillow==8.4.0
     PyAutoGUI==0.9.53
     python-telegram-bot==13.9
     pywin32==303
