@@ -17,6 +17,17 @@ Se você achou que esse bot foi uma ajuda para você, por favor faça uma doaç�
 - **PayPal:** https://www.paypal.com/donate/?hosted_button_id=82CABN6CYVG6U
 - **Pix:** 42a762ed-e6ec-4059-a88e-f168b9fbc63f (chave aleatória)
 
+## Principais etapas
+
+De uma forma resumida vai vai precisar fazer:
+
+1. Baixar `Python`
+2. Instalar pacotes do python atráves do `requirements.txt`
+3. Ajustar a `escala do monitor` para `100%` se necessário
+4. Baixar o navegador `Brave` (melhor opção)
+5. Alterar as configurações no arquivo `config.yaml` se necessário
+6. Criar bot do `Telegram` se necessário
+
 ## Project structure
     .
     └── Bot_BombCrypto
@@ -29,14 +40,24 @@ Se você achou que esse bot foi uma ajuda para você, por favor faça uma doaç�
             ├── img
                 ├── game               # todas as imagens relacionadas ao jogo estarão aqui
                 ├── readme             # todas as imagens relacionadas ao repositório
+                ├── screenshot         # todas as imagens tiradas da tela (pasta será criada automaticamente)
 
 ## Tutorial
 
 O tutorial para instalar e usar esse bot pode ser encontrado aqui [GitHub Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "GitHub Wiki").
 
+O tutorial para usar o Brave para este bot pode ser encontrado aqui [GitHub Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-enable-multiaccount-feature-on-Bot "GitHub Wiki").
+
 #### Algumas configurações podem ser alteradas no arquivo config.yaml. Caso mude, não se esqueça de reiniciar o bot para que as novas configurações sejam ativadas.
 
 ## Atualizações
+
+- **27/01/2022**:
+    - Adicionado recursos de várias contas
+    - Adicionado nome do bot na integração do Telegram
+    - Adicionada mecânica de erro do navegador devido ao problema BombCrypto
+    - Alterado o recurso de gatilho com base no tempo
+    - Melhoria no ciclo de bots infinito
 
 - **24/01/2022**:
  	- Ajustado a função para obter chat_id do telegram
@@ -46,6 +67,13 @@ O tutorial para instalar e usar esse bot pode ser encontrado aqui [GitHub Wiki](
 
 ## Requisitos
 
+Browser: `Brave: Versão 1.34.81 Chromium: 97.0.4692.99`
+
+#### ⚠️ Eu realmente aconselho você a usar o navegador Brave em vez de outros, por vários motivos, especialmente se você quiser usar várias contas.
+
+#### Para o turorial do Brave confira [aqui](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-enable-multiaccount-feature-on-Bot "aqui").
+
+------------
 Versão do Windows:
 - `Windows 10`
 
@@ -60,7 +88,10 @@ Os requisitos também podem ser encontrados no arquivo `requirements.txt`.
 Este projeto utiliza os seguintes requisitos:
 
     APScheduler==3.6.3
+    asyncio==3.4.3    
     numpy==1.21.4
+    pandas==1.1.5
+    pathlib==1.0.1
     PyAutoGUI==0.9.53
     python-telegram-bot==13.9
     pywin32==303
@@ -88,12 +119,45 @@ Escala do monitor: `100%`
 - Faça captura de tela de erros e novos mapas
 - Envia mensages para o bot do seu Telegram
 - Atualização de herói apenas (caso você esteja jogando sozinho)
+- Funciona com a quantidade de contas que você precisar
 
 ###### *Atualizar heróis explicados: Bot apenas atualizará o jogo voltando ao menu e depois voltando ao modo Caça ao Tesouro*
+
+## YAML file configurations and options explained
+
+**1. bot_options**
+- **create_logfiles**: Você pode habilitar a criação de arquivos de log disponíveis na pasta `logs`
+- **delete_old_logfiles**: Você pode habilitar a exclusão de arquivos de log antigos e manter o arquivo de data de hoje.
+- **delete_old_folders**: Você pode habilitar a exclusão de pastas mais antigas e manter as pastas de datas de hoje.
+- **enable_multiaccount**: Você pode habilitar o recurso multiconta.
+- **multiaccount_names**: Você pode definir os nomes de contas/perfis do navegador Brave em cada linha.
+- **refresh_browser_time**: Você pode definir o horário em que o navegador será atualizado pelas teclas: CTRL + SHIFT + R.
+**1.1 metamask_options**
+	- **enable_login_metamask**: Você pode habilitar o login no Metamask quando estiver bloqueado e precisa de senha para desbloquear.
+	- **metamask_password**: Se a opção `enable_login_metamask` estiver definida como `True`, você pode passar a senha para desbloquear o Metamask.
+
+**2. telegram_options**
+- **telegram_integration**: Você também pode habilitar a integração de mensagens de log para mensagens do Telegram.
+- **telegram_token**: Se `telegram_integration` estiver definido como `True`, você pode passar o token do seu bot do Telegram.
+- **telegram_chatid**: Se `telegram_integration` estiver definido como `True`, você pode passar o número chat_id do seu bot do Telegram. Uma vez que o número é escrito, ele não muda mais.
+
+**2. heroes_options**
+- **work_heroes_options**: Você pode definir o modo de trabalho para seus heróis. A opção `all` envia todos os heróis para o trabalho.
+- **work_heroes_time**: Você pode definir a hora em que o bot os enviará para trabalhar automaticamente.
+- **refresh_heroes_time**: Você pode definir a hora em que o bot apenas atualizará o jogo voltando ao menu principal e indo para o jogo Caça ao Tesouro.
+- **refresh_heroes_only**: Você pode habilitar apenas a atualização do jogo voltando ao menu principal e indo para o jogo Caça ao Tesouro, com esta opção o bot *não* enviará heróis para trabalhar ou fazer outras funcionalidades.
+
+## Melhorias
+
+- [ ] Algumas mensagens do pacote logging não estão sendo enviadas quando a função é chamada por algum motivo
+- [ ] Envie para trabalhar alguns heróis em vez de todos
+- [ ] Envie heróis para casa
+- [ ] Envie fotos por mensagem do Telegram
+- [ ] Informe quantas vezes as funções principais foram executadas
 
 ## Conclusão
 
 1. Quer o meu código? [Pegue aqui](https://github.com/guimatheus92/Bot_BombCrypto "Grab it here") 📎
-2. Quer o tutorial de como usa-lo? [Vá para o Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki/How-to-execute-BombCrypto-bot "Go to here") ✔️
+2. Quer o tutorial de como usa-lo? [Vá para o Wiki](https://github.com/guimatheus92/Bot_BombCrypto/wiki "Go to here") ✔️
 3. Novas ideias para este app? Me ajuda a melhora-lo ❤️
 4. Quer algo mais adicionado neste tutorial? Crie uma Issu no repositório ⚠️
