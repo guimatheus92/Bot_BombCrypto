@@ -105,8 +105,8 @@ telegram_options:
   # [en]
   # ---- Telegram token ----
   # Type: String
-  # Default value: "Example"
-  telegram_token: "Example"
+  # Default value: Null
+  telegram_token: Null
 
   # [en]
   # ---- Telegram chat id ----

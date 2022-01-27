@@ -194,7 +194,9 @@ def setup_logger(telegram_integration=False, bot_name=''):
     You can define the logging level and the file name.
     To setup as many loggers as you want.
     '''  
-
+    
+    if not os.path.exists(os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'logs')):
+        os.mkdir(os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'logs'))
     filename = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'logs', str(datetime.date.today()) + '.log')
     if bot_name != '':
         formatter = logging.Formatter('%(levelname)s | Function: %(funcName)s | %(asctime)s: Bot (' + str(bot_name) + '):  %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
@@ -204,7 +206,7 @@ def setup_logger(telegram_integration=False, bot_name=''):
     level = logging.INFO
 
     if create_logfiles != False:
-        handler = logging.FileHandler(filename, 'a')    
+        handler = logging.FileHandler(filename, 'a')
         handler.setFormatter(formatter)
 
     consolehandler = logging.StreamHandler(sys.stdout)
