@@ -1,6 +1,6 @@
+import sys
 import requests
 import json
-import asyncio
 import datetime
 import logging
 import pyautogui
@@ -10,6 +10,8 @@ import datetime
 import time
 import yaml
 import telegram
+import pandas as pd
+from pywinauto import Desktop
 
 def read_configurations():
     '''
@@ -28,6 +30,8 @@ try:
     create_logfiles = streamConfig['bot_options']['create_logfiles']
     delete_old_logfiles = streamConfig['bot_options']['delete_old_logfiles']
     delete_old_folders = streamConfig['bot_options']['delete_old_folders']
+    multiaccount_names = streamConfig['bot_options']['multiaccount_names']
+    enable_multiaccount = streamConfig['bot_options']['enable_multiaccount']
 except FileNotFoundError:
     print('Error: config.yaml file not found, make sure config.yaml are placed in the folder..')
     exit()
@@ -82,9 +86,11 @@ def start_telegram():
     Function to start telegram
     '''
 
-    if telegram_integration != False:        
-        #print('Initializing Telegram...')
-        TelegramBot = telegram.Bot(token=telegram_token)
+    if telegram_integration != False:
+        if telegram_token is None:
+            print('Telegram token not found on config.yaml file...')
+        else:
+            TelegramBot = telegram.Bot(token=telegram_token)
         return TelegramBot
     else:
         print('Telegram integration not enabled on config.yaml file...')
@@ -97,16 +103,19 @@ def get_telegram_chat_id():
     
     try:
         if telegram_chatid is None:
-            url = 'https://api.telegram.org/bot' + str(telegram_token) + '/getUpdates'
-            response = requests.request("GET", url)
-            telegram_response = json.loads(response.text)
-            chat_id = telegram_response['result'][0]['message']['chat']['id']
+            if telegram_token is None:
+                print('Telegram token not found on config.yaml file...')
+            else:
+                url = 'https://api.telegram.org/bot' + str(telegram_token) + '/getUpdates'
+                response = requests.request("GET", url)
+                telegram_response = json.loads(response.text)
+                chat_id = telegram_response['result'][0]['message']['chat']['id']
             return chat_id
     except:
         print('Telegram chat id not found! Make sure to send at least any message to your bot on Telegram, so the endpoint from API might work corectly! Exiting bot..')
         os._exit(0)
 
-def send_telegram_msg(message):
+def send_telegram_msg(message, bot_name=''):
     '''
     Function to send Telegram message
     '''
@@ -115,9 +124,16 @@ def send_telegram_msg(message):
             chat_id = get_telegram_chat_id()
         else:
             chat_id = telegram_chatid
+        
+        TelegramBot = start_telegram()
+        if bot_name != '':
+            TelegramBot.send_message(text='Bot (' + str(bot_name) + '): ' + message, chat_id=chat_id)
+        else:
+            TelegramBot.send_message(text=message, chat_id=chat_id)
 
-        TelegramBot = start_telegram()    
-        TelegramBot.send_message(text=message, chat_id=chat_id)
+# Function to send Telegram pictures
+def SendTelegramPic():
+    print(True)
         
 def take_screenshot(folder='', sub_folder='', info = ''):
     '''
@@ -157,7 +173,7 @@ async def initialize_pyautogui():
     # Initialized PyAutoGUI
     # https://pyautogui.readthedocs.io/en/latest/introduction.html
     # When fail-safe mode is True, moving the mouse to the upper-left corner will abort your program.
-    pyautogui.FAILSAFE = True
+    pyautogui.FAILSAFE = False
     pyautogui.PAUSE = 1
 
 def run_once(f):
@@ -172,7 +188,7 @@ def run_once(f):
     return wrapper
 
 # Define the logging level and the file name
-async def setup_logger(telegram_integration=False):
+def setup_logger(telegram_integration=False, bot_name=''):
     '''
     Function to log the steps you need.
     You can define the logging level and the file name.
@@ -180,22 +196,26 @@ async def setup_logger(telegram_integration=False):
     '''  
 
     filename = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'logs', str(datetime.date.today()) + '.log')
-    formatter = logging.Formatter('%(levelname)s | Function: %(funcName)s | %(asctime)s: %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
+    if bot_name != '':
+        formatter = logging.Formatter('%(levelname)s | Function: %(funcName)s | %(asctime)s: Bot (' + str(bot_name) + '):  %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
+    else:
+        formatter = logging.Formatter('%(levelname)s | Function: %(funcName)s | %(asctime)s: %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
+    
     level = logging.INFO
 
     if create_logfiles != False:
         handler = logging.FileHandler(filename, 'a')    
         handler.setFormatter(formatter)
 
-    consolehandler = logging.StreamHandler()
+    consolehandler = logging.StreamHandler(sys.stdout)
     consolehandler.setFormatter(formatter)
  
-    if telegram_integration != False:
+    if telegram_integration != False and telegram_token is not None:
         class TelegramHandler(logging.Handler):
 
             def emit(self, record):
                 message = self.format(record)
-                send_telegram_msg(message)
+                send_telegram_msg(message, bot_name)
                 # send_telegram_msg(message, record.levelno)    # Passing level
                 # send_telegram_msg(message, record.levelname)  # Passing level name
 
@@ -208,11 +228,61 @@ async def setup_logger(telegram_integration=False):
         if create_logfiles != False:
             logger.addHandler(handler)
         logger.addHandler(consolehandler)        
-        if telegram_integration != False:
+        if telegram_integration != False and telegram_token is not None:
             telegram_handler = TelegramHandler()
             logger.addHandler(telegram_handler)        
 
     return logger
+
+def get_browser():
+
+    logger = setup_logger(telegram_integration=True)
+
+    # Get all profiles from Brave web browser
+    profiles = multiaccount_names
+    if enable_multiaccount != False:
+        logger.info(str("Profiles selected: " + '%s' % ', '.join(map(str, profiles))))
+
+    if not profiles:
+        logger.error("Please type the profile names correctly in the file config.yaml before running this bot! Exiting bot..")
+        os._exit(0)
+    else:
+        if enable_multiaccount != False:
+            # Get all windows opens
+            windows = Desktop(backend="uia").windows()
+            window = [w.window_text() for w in windows]
+            # Create a dataframe in order to store the windows needed
+            df_windows = pd.DataFrame(window, columns =['WebBrowser'])
+            # Filter dataframe only to show all windows from Brave web browser
+            df_windows = df_windows.loc[df_windows['WebBrowser'].str.contains("Brave:", case=False)]
+            # Add column profile from Brave
+            df_windows['Profile'] = df_windows['WebBrowser'].str.split(':').str[1].str.strip()
+            # Add column window open from Brave
+            df_windows['Window'] = df_windows['WebBrowser'].str.split(':').str[0].str.strip()
+            # Add column about the website open from Brave
+            df_windows['Website'] = df_windows['Window'].str.replace(" - Brave", "").str.strip()
+            # Filter dataframe only to show all bombcrypto game window
+            df_windows = df_windows.loc[df_windows['Website'] == 'Bombcrypto']
+            
+            applications = []
+            website_browser = []
+
+            try:
+                for profile in df_windows['Profile']:
+                    if profile in profiles:
+                        website = df_windows.loc[df_windows.Profile==profile,'WebBrowser'].values[0]                
+                        applications.append([website, profile])
+
+                bomb = df_windows.loc[df_windows.Website=='Bombcrypto','Website'].values[0]
+                website_browser.append(bomb)
+            except:
+                pass
+            
+            return applications, website_browser
+        else:
+            applications = [['Bot', 'BCOIN', 'None']]
+            website_browser = ['Bombcrypto']
+            return applications, website_browser
 
 async def countdown_timer():
     '''

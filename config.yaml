@@ -17,6 +17,7 @@
 #********************************************************************************#
 #**** BUSD/BCOIN/ETH/BNB (BEP20): 0xf1e43519fca44d9308f889baf99531ed0de903fc ****#
 #**** PayPal: https://www.paypal.com/donate/?hosted_button_id=82CABN6CYVG6U *****#
+#************* Nubank: https://nubank.com.br/pagar/1jxcl/z5fyuL6S28 *************#
 #****************** Pix: 42a762ed-e6ec-4059-a88e-f168b9fbc63f *******************#
 #********************************************************************************#
 
@@ -47,6 +48,33 @@ bot_options:
   # False = Keep all old folders unless today's date
   delete_old_folders: False
 
+  # [en]
+  # ---- Enable multiaccount ----
+  # Default value: False
+  # Available options:
+  # True = Enable multiaccount for this bot
+  # False = Don't enable multiaccount for this bot
+  # If you enable multiaccount, don't forget to set the profile names below
+  enable_multiaccount: False
+
+  # [en]
+  # ---- Open the web browser automatically ----
+  # Default value: False
+  # Type: String
+  # Available options:
+  # True = Open web browser automatically when you set the name
+  # False = Don't open web browser automatically when you set the name
+  multiaccount_names:
+    - 'Example'
+
+  # [en]
+  # ---- Refresh browser page ----
+  # Default value: 60 (minutes)
+  # Available options:
+  # Any value starting from 10
+  # Remember that refreshing the page takes time, so becarefull with the number you set
+  refresh_browser_time: 60
+
   metamask_options:
     # [en]
     # ---- Enable login in Metamask ----
@@ -58,6 +86,7 @@ bot_options:
 
     # [en]
     # ---- Metamask Password ----
+    # Type: String
     # Default value: Null
     metamask_password: Null
 
@@ -75,16 +104,17 @@ telegram_options:
 
   # [en]
   # ---- Telegram token ----
-  # Default value: Null
-  telegram_token: Null
+  # Type: String
+  # Default value: "Example"
+  telegram_token: "Example"
 
   # [en]
   # ---- Telegram chat id ----
   # Default value: Null
-  # If you don't know the chat id, it'll retrieve automatically
+  # To get chat id manually, go to https://api.telegram.org/bot<telegram_token>/getUpdates
+  # If you don't know the chat id, it'll retrieve automatically if you already sent a message to the bot
   # It's not possible to retrieve chat id, if telegram token is null
   telegram_chatid: Null
-
 
 # [en]
 # ---- Configurations related to heroes ----
@@ -98,11 +128,19 @@ heroes_options:
 
   # [en]
   # ---- Time to send heroes to work ----
-  # Default value: 15 (minutes)
+  # Default value: 30 (minute)
   # Available options:
   # Any value starting from 1
   # Remember to set a different time from the option [refresh_heroes_time]
-  work_heroes_time: 15
+  work_heroes_time: 30
+
+  # [en]
+  # ---- Refresh heroes position time ----
+  # Default value: 9 (minutes)
+  # Available options:
+  # Any value starting from 1
+  # Remember to set a different time from the option [work_heroes_time]
+  refresh_heroes_time: 9
 
   # [en]
   # ---- Refresh heroes position only ----
@@ -111,11 +149,3 @@ heroes_options:
   # True = Keep refreshing heroes position
   # False = Don't keep refreshing heroes position, and do all the process correctly
   refresh_heroes_only: False
-
-  # [en]
-  # ---- Refresh heroes position time ----
-  # Default value: 5 (minutes)
-  # Available options:
-  # Any value starting from 1
-  # Remember to set a different time from the option [work_heroes_time]
-  refresh_heroes_time: 5
