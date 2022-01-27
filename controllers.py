@@ -259,7 +259,7 @@ def get_browser():
         # Add column key to find profile
         df_windows['Key'] = df_windows['WebBrowser'].str.replace(' ','').str.strip()
         # Add column profile from Brave
-        df_windows['Profile'] = df_windows['Key'].str.split('Bombcrypto-Brave').str[1].str.replace(':','').replace('-','').str.strip()
+        df_windows['Profile'] = df_windows['Key'].str.split('Bombcrypto-Brave').str[1].str.replace(':','').str.replace('-','').str.strip()
         # Add column about the website open from Brave
         df_windows['Website'] = df_windows['WebBrowser'].str.split().str[0].str.strip()
         # Filter dataframe only to show all bombcrypto game window
