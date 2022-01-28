@@ -28,7 +28,7 @@ De uma forma resumida vai precisar fazer:
 5. Alterar as configurações no arquivo `config.yaml` se necessário
 6. Criar bot do `Telegram` se necessário
 
-## Project structure
+## Estrutura do projeto
     .
     └── Bot_BombCrypto
         ├── main.py                    # inicia nosso app
