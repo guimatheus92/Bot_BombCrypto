@@ -136,6 +136,8 @@ async def main():
                         trigger.set_refresh = False
                 if refresh_heroes_only != True:                
                     # Steps of this bot:
+                    # - Login Metamask
+                    await asyncio.create_task(login_metamask(app_name=app[1]))                    
                     # - Connect Wallet on BomberCypto game                       
                     await asyncio.create_task(connect_wallet(app_name=app[1]))
                     # - Login Metamask
