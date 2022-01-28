@@ -5,7 +5,7 @@
 
 ------------
 
-Este é uma automação (bot) para jogar o jogo BombCrypto, esse bot automaticamente loga no jogo, coloca os heróis para trabalhar, atualiza o jogo para não cair por tempo de resposta, checa novos maps, etc.
+Este é uma automação (bot) para jogar o jogo BombCrypto, esse bot automaticamente loga no jogo, coloca os heróis para trabalhar, atualiza o jogo para não cair por tempo de resposta, checa novos mapas, etc.
 
 Se você achou que esse bot foi uma ajuda para você, por favor faça uma doação com as opções abaixo, assim podemos continuar a melhorar o grande trabalho que gastei e por tantas horas gastas 🤯.
 
@@ -19,7 +19,7 @@ Se você achou que esse bot foi uma ajuda para você, por favor faça uma doaç�
 
 ## Principais etapas
 
-De uma forma resumida vai vai precisar fazer:
+De uma forma resumida vai precisar fazer:
 
 1. Baixar `Python`
 2. Instalar pacotes do python atráves do `requirements.txt`
