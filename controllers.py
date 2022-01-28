@@ -217,9 +217,12 @@ def setup_logger(telegram_integration=False, bot_name=''):
 
             def emit(self, record):
                 message = self.format(record)
-                send_telegram_msg(message, bot_name)
-                # send_telegram_msg(message, record.levelno)    # Passing level
-                # send_telegram_msg(message, record.levelname)  # Passing level name
+                try:
+                    send_telegram_msg(message, bot_name)
+                    # send_telegram_msg(message, record.levelno)    # Passing level
+                    # send_telegram_msg(message, record.levelname)  # Passing level name
+                except:
+                    send_telegram_msg('Error on message!', bot_name)
 
     logger = logging.getLogger('logs')
     if logger.hasHandlers():
