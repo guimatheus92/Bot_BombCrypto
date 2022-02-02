@@ -52,6 +52,9 @@ The tutorial on how to use Brave browser for this bot can be found on [GitHub Wi
 
 ## Changelog
 
+- **02/02/2022**:
+    - Updated trigger for each schedule
+    
 - **27/01/2022**:
     - Added multiaccount features
     - Added bot name in telegram integration
@@ -87,7 +90,7 @@ Python 3.9.9
 The requirements can be found in `requirements.txt` file also.
 This project utilizes the following requirements:
 
-    ﻿APScheduler==3.6.3
+    APScheduler==3.6.3
     asyncio==3.4.3    
     numpy==1.21.4
     opencv-python==4.5.4.60

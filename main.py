@@ -83,18 +83,18 @@ async def main():
     if (refresh_heroes_time*60) > 59:
         logger.info('Scheduling the refresh heroes positions every %s minute(s)!' % (refresh_heroes_time))
         # - Do a full review on games        
-        scheduler.add_job(trigger.UpdateSetRefresh, 'interval', seconds=(refresh_heroes_time*60), id='1', name='refresh_hereoes_positions', misfire_grace_time=180)
+        scheduler.add_job(trigger.UpdateSetRefresh, 'interval', minutes=refresh_heroes_time, id='1', name='refresh_hereoes_positions', misfire_grace_time=180)
 
     if refresh_heroes_only != True:
         if (work_heroes_time*60) > 59:
             logger.info('Scheduling the time for heroes to work every %s minute(s)!' % (work_heroes_time))
             # - Send heroes to work
-            scheduler.add_job(trigger.UpdateSetWork, 'interval', seconds=(work_heroes_time*60), id='2', name='send_heroes_to_work', misfire_grace_time=300)
+            scheduler.add_job(trigger.UpdateSetWork, 'interval', minutes=work_heroes_time, id='2', name='send_heroes_to_work', misfire_grace_time=300)
 
         if (refresh_browser_time*60) > 59:
             logger.info('Scheduling the time for refreshing the browser every %s minute(s)!' % (refresh_browser_time))
             # - Do a full review on games        
-            scheduler.add_job(trigger.UpdateSetReload, 'interval', seconds=(refresh_browser_time*60), id='3', name='refresh_browser_time', misfire_grace_time=180)
+            scheduler.add_job(trigger.UpdateSetReload, 'interval', minutes=refresh_browser_time, id='3', name='refresh_browser_time', misfire_grace_time=180)
 
     if len(scheduler.get_jobs()) > 0:
         scheduler.start()
@@ -116,9 +116,9 @@ async def main():
                     app.append(browser)
                 await asyncio.create_task(first_start(app_name=app[1]))                
 
-            i = 0
-            j = 0
-            k = 0
+            bot_executions_refresh = []
+            bot_executions_work = []
+            bot_executions_reload = []
             # Cycle through the bots in one loop rather than restarting the loop in an infinite loop
             for app in cycle(applications):
                 if enable_multiaccount != False and refresh_heroes_only != True:
@@ -129,10 +129,10 @@ async def main():
                         if enable_multiaccount != False:
                             print('Going to bot: ' + str(app[1]))
                             app[2].set_focus()
+                        bot_executions_refresh.append(app[1])
                         await asyncio.create_task(refresh_hereoes_positions(app_name=app[1]))
-                        i += 1
-                    if i == len(applications) and trigger.set_refresh != False:
-                        i = 0
+                    if (len(bot_executions_refresh) == len(applications)) and trigger.set_refresh != False:
+                        bot_executions_refresh.clear()
                         trigger.set_refresh = False
                 if refresh_heroes_only != True:                
                     # Steps of this bot:
@@ -150,23 +150,26 @@ async def main():
                     await asyncio.create_task(skip_error_on_game(app_name=app[1]))
 
                     # - Time to call some functions
-                    if trigger.set_refresh != False:
-                        await asyncio.create_task(refresh_hereoes_positions(app_name=app[1]))
-                        i += 1
-                    if trigger.set_work != False:
-                        await asyncio.create_task(send_heroes_to_work(app_name=app[1]))
-                        j += 1
-                    if trigger.set_reload != False:
-                        await asyncio.create_task(reload_page(app_name=app[1]))
-                        k += 1
-                    if i == len(applications) and trigger.set_refresh != False:
-                        i = 0
+                    if trigger.set_refresh != False:                        
+                        if app[1] not in bot_executions_refresh:
+                            bot_executions_refresh.append(app[1])
+                            await asyncio.create_task(refresh_hereoes_positions(app_name=app[1]))
+                    if trigger.set_work != False:                        
+                        if app[1] not in bot_executions_work:
+                            bot_executions_work.append(app[1])
+                            await asyncio.create_task(send_heroes_to_work(app_name=app[1]))
+                    if trigger.set_reload != False:                        
+                        if app[1] not in bot_executions_reload:
+                            bot_executions_reload.append(app[1])
+                            await asyncio.create_task(reload_page(app_name=app[1]))
+                    if (len(bot_executions_refresh) == len(applications)) and trigger.set_refresh != False:
+                        bot_executions_refresh.clear()
                         trigger.set_refresh = False
-                    elif j == len(applications) and trigger.set_work != False:
-                        j = 0
+                    elif (len(bot_executions_work) == len(applications)) and trigger.set_work != False:
+                        bot_executions_work.clear()
                         trigger.set_work = False
-                    elif k == len(applications) and trigger.set_reload != False:
-                        k = 0
+                    elif (len(bot_executions_reload) == len(applications)) and trigger.set_reload != False:
+                        bot_executions_reload.clear()
                         trigger.set_reload = False
                                         
         else:

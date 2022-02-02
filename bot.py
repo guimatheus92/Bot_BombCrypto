@@ -193,7 +193,7 @@ async def treasure_hunt_game(refresh_only=True,app_name=''):
 
     TreasureHuntImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'treasure-hunt-screen.png')
     await asyncio.sleep(np.random.uniform(2.5,3.5))
-    if pyautogui.locateOnScreen(TreasureHuntImg, confidence=0.8) != None:
+    if pyautogui.locateOnScreen(TreasureHuntImg, grayscale=True, confidence=0.8) != None:
         # Move mouse in a random place first
         move_mouse_random()
         # Move to location               

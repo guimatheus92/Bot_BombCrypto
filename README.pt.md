@@ -52,6 +52,9 @@ O tutorial para usar o Brave para este bot pode ser encontrado aqui [GitHub Wiki
 
 ## Atualizações
 
+- **02/02/2022**:
+    - Atualizado o trigger para cada agendamento
+
 - **27/01/2022**:
     - Adicionado recursos de várias contas
     - Adicionado nome do bot na integração do Telegram
@@ -87,7 +90,7 @@ Python 3.9.9
 Os requisitos também podem ser encontrados no arquivo `requirements.txt`.
 Este projeto utiliza os seguintes requisitos:
 
-    ﻿APScheduler==3.6.3
+    APScheduler==3.6.3
     asyncio==3.4.3    
     numpy==1.21.4
     opencv-python==4.5.4.60
