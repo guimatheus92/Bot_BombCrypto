@@ -149,3 +149,10 @@ heroes_options:
   # True = Keep refreshing heroes position
   # False = Don't keep refreshing heroes position, and do all the process correctly
   refresh_heroes_only: False
+
+  # [en]
+  # ---- Take chest screenshot ----
+  # Default value: 60 (minutes)
+  # Available options:
+  # Any value starting from 5
+  chest_screenshot_time: 60  

@@ -5,13 +5,14 @@ import pathlib
 import asyncio
 import numpy as np
 from random import randint
-from controllers import setup_logger, take_screenshot, read_configurations
+from controllers import setup_logger, take_screenshot, read_configurations, send_telegram_pic
 
 try:
     streamConfig = read_configurations()
     work_heroes_options = streamConfig['heroes_options']['work_heroes_options']
     enable_login_metamask = streamConfig['bot_options']['metamask_options']['enable_login_metamask']
     metamask_password = streamConfig['bot_options']['metamask_options']['metamask_password']
+    telegram_integration = streamConfig['telegram_options']['telegram_integration']
 except FileNotFoundError:
     print('Error: config.yaml file not found, make sure config.yaml are placed in the folder..')
     exit()
@@ -253,13 +254,19 @@ async def send_heroes_to_work(app_name=''):
         if work_heroes_options == 'all':
             WorkAllBtn = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'work-all-btn.png')
             if pyautogui.locateOnScreen(WorkAllBtn, confidence=0.8) != None:
+                # Take Screenshot
+                path_file = take_screenshot('screenshot', 'report', 'sendheroestowork')
+                await asyncio.sleep(np.random.uniform(0.8,1.5))
+                if telegram_integration != False:
+                    # Send picture to Telegram
+                    send_telegram_pic(path_file)
                 # Move mouse in a random place first
                 move_mouse_random()
-                # Move to location               
+                # Move to location
                 pyautogui.moveTo(pyautogui.locateOnScreen(WorkAllBtn, confidence=0.8), None, np.random.uniform(0.4,0.9), pyautogui.easeInOutQuad)
                 # Click on Treasure Hunt game mode
                 pyautogui.click()
-                await asyncio.sleep(np.random.uniform(0.5,1.5))                
+                await asyncio.sleep(np.random.uniform(0.5,1.5))              
                 logger.info('All heroes were sending to work..')
                 await asyncio.sleep(np.random.uniform(1.5,2.5))
                 # Close the window for heroes
@@ -426,7 +433,7 @@ async def skip_error_on_game(app_name=''):
         return
     elif pyautogui.locateOnScreen(BrowserErrorBtnImg, grayscale=True, confidence=0.8) != None:
         # Take screenshot of the error
-        take_screenshot('screenshot', 'errors', 'browser_error')        
+        take_screenshot('screenshot', 'errors', 'browser_error')
         await asyncio.sleep(np.random.uniform(0.8,1.5))
         logger.warning('Browser error, check screenshot image to find it..')
         if pyautogui.locateOnScreen(BrowserErrorBtnImg, grayscale=True, confidence=0.8) != None:
@@ -455,6 +462,31 @@ async def skip_error_on_game(app_name=''):
         # Start game again
         await asyncio.create_task(reload_page(app_name=app_name))
         return
+
+async def how_many_coins(app_name=''):
+    '''
+    Function to send screenshot to telegram of how many coins the player has.
+    '''
+    
+    ChestImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'chest-btn.png')
+    logger = setup_logger(telegram_integration=True,bot_name=app_name)
+    if pyautogui.locateOnScreen(ChestImg, grayscale=True, confidence=0.8) != None:
+        # Move mouse in a random place first
+        move_mouse_random()
+        # Move to location
+        pyautogui.moveTo(pyautogui.locateOnScreen(ChestImg, grayscale=True, confidence=0.8), None, np.random.uniform(0.4,0.9), pyautogui.easeInOutQuad)
+        # Click on button
+        pyautogui.click()
+        await asyncio.sleep(np.random.uniform(0.5,0.8))
+        # Take screenshot of the error
+        path_file = take_screenshot('screenshot', 'report', 'coins')        
+        if telegram_integration != False:
+            # Send picture to Telegram
+            send_telegram_pic(path_file)
+        logger.info('Screenshot took from chest, you can check how many coins you have!')
+        await asyncio.create_task(close_button(app_name=app_name))
+        return
+
 
 def move_mouse_random():
     '''
@@ -488,6 +520,7 @@ class SetTrigger(object):
         self.set_work = False
         self.set_reload = False
         self.set_refresh = False
+        self.set_coin = False
     
     def UpdateSetRefresh(self):
         self.set_refresh = True
@@ -500,3 +533,7 @@ class SetTrigger(object):
     def UpdateSetReload(self):
         self.set_reload = True
         return self.set_reload
+    
+    def UpdateSetCoin(self):
+        self.set_coin = True
+        return self.set_coin

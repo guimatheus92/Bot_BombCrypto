@@ -132,8 +132,19 @@ def send_telegram_msg(message, bot_name=''):
             TelegramBot.send_message(text=message, chat_id=chat_id)
 
 # Function to send Telegram pictures
-def SendTelegramPic():
-    print(True)
+def send_telegram_pic(image):
+    '''
+    Function to send Telegram pictures
+    '''
+    if telegram_integration != False:
+        if telegram_chatid is None:
+            chat_id = get_telegram_chat_id()
+        else:
+            chat_id = telegram_chatid
+        
+        TelegramBot = start_telegram()
+        TelegramBot.send_photo(chat_id=chat_id, photo=open(image, 'rb'))
+
         
 def take_screenshot(folder='', sub_folder='', info = ''):
     '''
@@ -161,8 +172,11 @@ def take_screenshot(folder='', sub_folder='', info = ''):
     file = time.strftime(f"%Y-%m-%d-%H-%M-%S{info}.jpg")
     # Take screenshot
     myScreenshot = pyautogui.screenshot()
+    path_file = os.path.join(path, file)
     # Save screenshot
-    myScreenshot.save(os.path.join(path, file))
+    myScreenshot.save(path_file)
+
+    return path_file
 
 async def initialize_pyautogui():
     '''

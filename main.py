@@ -1,7 +1,7 @@
 import os
 import asyncio
 import tzlocal
-from bot import reload_page, connect_wallet, login_metamask, treasure_hunt_game, new_map, skip_error_on_game, refresh_hereoes_positions, send_heroes_to_work, first_start, SetTrigger
+from bot import reload_page, connect_wallet, login_metamask, treasure_hunt_game, new_map, skip_error_on_game, refresh_hereoes_positions, send_heroes_to_work, first_start, SetTrigger, how_many_coins
 from controllers import get_browser, countdown_timer, setup_logger, initialize_pyautogui, read_configurations, delete_log_files, delete_folders
 from pywinauto import Desktop
 from itertools import cycle
@@ -14,6 +14,7 @@ try:
     work_heroes_time = streamConfig['heroes_options']['work_heroes_time']
     refresh_browser_time = streamConfig['bot_options']['refresh_browser_time']
     enable_multiaccount = streamConfig['bot_options']['enable_multiaccount']
+    chest_screenshot_time = streamConfig['heroes_options']['chest_screenshot_time']    
 except FileNotFoundError:
     print('Error: config.yaml file not found, make sure config.yaml are placed in the folder..')
     exit()
@@ -85,6 +86,11 @@ async def main():
         # - Do a full review on games        
         scheduler.add_job(trigger.UpdateSetRefresh, 'interval', minutes=refresh_heroes_time, id='1', name='refresh_hereoes_positions', misfire_grace_time=180)
 
+    if chest_screenshot_time > 4:
+        logger.info('Scheduling to take screenshot from chest every %s minute(s)!' % (chest_screenshot_time))
+        # - Do a full review on games        
+        scheduler.add_job(trigger.UpdateSetCoin, 'interval', minutes=chest_screenshot_time, id='4', name='chest_screenshot_time', misfire_grace_time=180)        
+
     if refresh_heroes_only != True:
         if (work_heroes_time*60) > 59:
             logger.info('Scheduling the time for heroes to work every %s minute(s)!' % (work_heroes_time))
@@ -114,11 +120,12 @@ async def main():
                     browser = Desktop(backend="uia").windows(title=app[0])[0]
                     browser.set_focus()
                     app.append(browser)
-                await asyncio.create_task(first_start(app_name=app[1]))                
+                await asyncio.create_task(first_start(app_name=app[1]))
 
             bot_executions_refresh = []
             bot_executions_work = []
             bot_executions_reload = []
+            bot_executions_coin = []
             # Cycle through the bots in one loop rather than restarting the loop in an infinite loop
             for app in cycle(applications):
                 if enable_multiaccount != False and refresh_heroes_only != True:
@@ -150,27 +157,36 @@ async def main():
                     await asyncio.create_task(skip_error_on_game(app_name=app[1]))
 
                     # - Time to call some functions
-                    if trigger.set_refresh != False:                        
+                    if trigger.set_refresh != False:
                         if app[1] not in bot_executions_refresh:
                             bot_executions_refresh.append(app[1])
                             await asyncio.create_task(refresh_hereoes_positions(app_name=app[1]))
-                    if trigger.set_work != False:                        
+                    if trigger.set_work != False:
                         if app[1] not in bot_executions_work:
                             bot_executions_work.append(app[1])
                             await asyncio.create_task(send_heroes_to_work(app_name=app[1]))
-                    if trigger.set_reload != False:                        
+                    if trigger.set_reload != False:
                         if app[1] not in bot_executions_reload:
                             bot_executions_reload.append(app[1])
                             await asyncio.create_task(reload_page(app_name=app[1]))
+                    if trigger.set_coin != False:
+                        if app[1] not in bot_executions_coin:
+                            bot_executions_coin.append(app[1])
+                            await asyncio.create_task(how_many_coins(app_name=app[1]))                            
+
+                    # - Reset trigger to call functions from schedule
                     if (len(bot_executions_refresh) == len(applications)) and trigger.set_refresh != False:
                         bot_executions_refresh.clear()
                         trigger.set_refresh = False
-                    elif (len(bot_executions_work) == len(applications)) and trigger.set_work != False:
+                    if (len(bot_executions_work) == len(applications)) and trigger.set_work != False:
                         bot_executions_work.clear()
                         trigger.set_work = False
-                    elif (len(bot_executions_reload) == len(applications)) and trigger.set_reload != False:
+                    if (len(bot_executions_reload) == len(applications)) and trigger.set_reload != False:
                         bot_executions_reload.clear()
                         trigger.set_reload = False
+                    if (len(bot_executions_coin) == len(applications)) and trigger.set_coin != False:
+                        bot_executions_coin.clear()
+                        trigger.set_coin = False
                                         
         else:
             logger.error('No account/profile found in the config.yaml file or profile do not match with profile opened, please check and restart the bot. Exiting bot...')
