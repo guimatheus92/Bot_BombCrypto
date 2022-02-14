@@ -52,6 +52,9 @@ The tutorial on how to use Brave browser for this bot can be found on [GitHub Wi
 
 ## Changelog
 
+- **10/02/2022**:
+    - Added function to send pictures through Telegram
+
 - **02/02/2022**:
     - Updated trigger for each schedule
     
@@ -157,7 +160,7 @@ Monitor scale: `100%`
 - [ ] Some logging messages is not sending when function is called for some reason
 - [ ] Send to work some heroes instead of all
 - [ ] Send heroes to home
-- [ ] Send pictures through Telegram message
+- [X] Send pictures through Telegram message
 - [ ] Report on how many times have the main functions run
 
 ## Conclusion
