@@ -52,6 +52,9 @@ O tutorial para usar o Brave para este bot pode ser encontrado aqui [GitHub Wiki
 
 ## Atualizações
 
+- **10/02/2022**:
+    - Adicionado a função de enviar imagens para o Telegram
+        
 - **02/02/2022**:
     - Atualizado o trigger para cada agendamento
 
@@ -157,7 +160,7 @@ Escala do monitor: `100%`
 - [ ] Algumas mensagens do pacote logging não estão sendo enviadas quando a função é chamada por algum motivo
 - [ ] Envie para trabalhar alguns heróis em vez de todos
 - [ ] Envie heróis para casa
-- [ ] Envie fotos por mensagem do Telegram
+- [X] Envie fotos por mensagem do Telegram
 - [ ] Informe quantas vezes as funções principais foram executadas
 
 ## Conclusão
