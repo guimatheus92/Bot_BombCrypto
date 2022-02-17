@@ -52,6 +52,10 @@ The tutorial on how to use Brave browser for this bot can be found on [GitHub Wi
 
 ## Changelog
 
+- **16/02/2022**:
+    - Minor fixes in some functions
+    - Fixed the logging messages
+
 - **10/02/2022**:
     - Added function to send pictures through Telegram
 
@@ -113,6 +117,7 @@ Monitor scale: `100%`
 ## Observations
 
 - Check [Requirements](https://github.com/guimatheus92/Bot_BombCrypto#requirements "Requirements") topic to make sure in what environment, tools and versions we know that it works.
+- I suggest you to turn off the feature `News and interests` from Windows, because the mouse might pass through it and click in some card without us know. You can turn off this feature from [Turn news and interests feature on and off](https://support.microsoft.com/en-us/windows/stay-up-to-date-with-news-and-interests-a39baa08-7488-4169-9ed8-577238f46f8f) guide.
 - All images taken from the game was from a Full HD screen and scale at 100%. So if your bot is not working, make sure that your scale is at least 100%. After that, get all pictures again and save them as `.png` format.
 
 ## Features
@@ -157,7 +162,7 @@ Monitor scale: `100%`
 
 ## Improvements
 
-- [ ] Some logging messages is not sending when function is called for some reason
+- [X] Some logging messages is not sending when function is called for some reason
 - [ ] Send to work some heroes instead of all
 - [ ] Send heroes to home
 - [X] Send pictures through Telegram message

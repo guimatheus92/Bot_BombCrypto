@@ -52,6 +52,10 @@ O tutorial para usar o Brave para este bot pode ser encontrado aqui [GitHub Wiki
 
 ## Atualizações
 
+- **16/02/2022**:
+    - Pequenas correções em algumas funções
+    - Melhorado o recurso de enviar mensagens
+
 - **10/02/2022**:
     - Adicionado a função de enviar imagens para o Telegram
         
@@ -113,6 +117,7 @@ Escala do monitor: `100%`
 ## Observações
 
 - Verifique o tópico de [Requisitos](https://github.com/guimatheus92/Bot_BombCrypto/blob/main/README.pt.md#requisitos "Requisitos") para ter certeza em qual ambiente e versões nós sabemos que funciona.
+- Sugiro que você desative o recurso 'Notícias e interesses' do Windows, pois o mouse pode passar por ele e clicar em algum cartão sem que saibamos. Você pode desativar esse recurso em [Ativar e desativar o recurso de notícias e interesses](https://support.microsoft.com/pt-br/windows/mantenha-se-atualizado-com-as-not%C3%ADcias-e-interesses-a39baa08-7488-4169-9ed8-577238f46f8f).
 - Todas as images foram tiradas do jogo de uma tela Full HD e a escala selecionada em 100%. Caso seu bot não esteja funcionando, certifique-se que a escala do seu monitor também esteja em 100%. Após isso, salve todas as imagens novamente e salve elas com o formato `.png`.
 
 ## Funcionalidades
@@ -157,7 +162,7 @@ Escala do monitor: `100%`
 
 ## Melhorias
 
-- [ ] Algumas mensagens do pacote logging não estão sendo enviadas quando a função é chamada por algum motivo
+- [X] Algumas mensagens do pacote logging não estão sendo enviadas quando a função é chamada por algum motivo
 - [ ] Envie para trabalhar alguns heróis em vez de todos
 - [ ] Envie heróis para casa
 - [X] Envie fotos por mensagem do Telegram

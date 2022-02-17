@@ -114,31 +114,6 @@ async def unlock_metamask(app_name=''):
                 logger.warning('The "enable_login_metamask" option is set to False, so it is not possible to unlock Metamask automatically, unless you change the option to True. Unlock Metamask manually first! Exiting bot..')
                 exit()
 
-async def agree_metamask(app_name=''):
-    '''
-    Function to agree with Metamask, it requires to open the Metamask icon and then signin or unlock Metamask account.
-    '''
-
-    # Click on next button
-    image_list = ['proximo-btn.png', 'next-btn.png']
-    for next_image in image_list:        
-        NextBtnImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', next_image)
-        # The next button is visible
-        if pyautogui.locateOnScreen(NextBtnImg, grayscale=True, confidence=0.8) != None:
-            await asyncio.sleep(np.random.uniform(0.4,0.8))
-            # Move mouse in a random place first
-            move_mouse_random()
-            # Move to location               
-            pyautogui.moveTo(pyautogui.locateOnScreen(NextBtnImg, grayscale=True, confidence=0.8), None, np.random.uniform(0.4,0.9), pyautogui.easeInOutQuad)
-            # Click on next button
-            pyautogui.click()
-            logger = setup_logger(telegram_integration=True, bot_name=app_name)
-            logger.info('Metamask connected..')
-            # Close Metamask window
-            pyautogui.hotkey('esc')
-            await asyncio.sleep(np.random.uniform(3.5,4.5))
-            return
-
 async def signin_metamask(app_name=''):
     '''
     Function to sign in into Metamask.    
@@ -177,8 +152,6 @@ async def login_metamask(app_name=''):
     await asyncio.create_task(open_metamask(app_name=app_name))
     # Unlock Metamask
     await asyncio.create_task(unlock_metamask(app_name=app_name))
-    # Agree Metamask
-    await asyncio.create_task(agree_metamask(app_name=app_name))
     # Sign Metamask
     await asyncio.create_task(signin_metamask(app_name=app_name))
     return
@@ -215,12 +188,12 @@ async def new_map(app_name=''):
     The game doesn't wait the user to click on the New Map button anymore.
     '''
 
-    logger = setup_logger()
+    logger = setup_logger(telegram_integration=False, bot_name=app_name)
     logger.info('Checking if is there any new map..')    
 
     NewMapBtnImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'new-map-btn.png')
     if pyautogui.locateOnScreen(NewMapBtnImg, grayscale=True, confidence=0.8) != None:
-        take_screenshot('screenshot', 'new_map', '_antes')
+        take_screenshot('screenshot', 'new_map', 'antes')
         # Move mouse in a random place first
         move_mouse_random()
         # Move to location               
@@ -228,10 +201,10 @@ async def new_map(app_name=''):
         # Click on Treasure Hunt game mode
         pyautogui.click()
         await asyncio.sleep(np.random.uniform(0.5,1.5))
-        logger = setup_logger(telegram_integration=True,bot_name=app_name)
+        logger = setup_logger(telegram_integration=True, bot_name=app_name)
         logger.info('New map available at: ' + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         await asyncio.sleep(np.random.uniform(1.5,2.5))
-        take_screenshot('screenshot', 'new_map', '_depois')
+        take_screenshot('screenshot', 'new_map', 'depois')
         return
 
 async def send_heroes_to_work(app_name=''):
@@ -402,6 +375,9 @@ async def first_start(app_name=''):
 
     # Check if is it possible to send heroes to work available at screen
     await asyncio.create_task(send_heroes_to_work(app_name=app_name))
+
+    # Check if is it possible to send heroes to work available at screen
+    await asyncio.create_task(how_many_coins(app_name=app_name))    
 
     # Refresh page if game is not already logged
     BombCryptoImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'bombcrypto-screen.png')

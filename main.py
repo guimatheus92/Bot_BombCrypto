@@ -100,7 +100,7 @@ async def main():
         if (refresh_browser_time*60) > 59:
             logger.info('Scheduling the time for refreshing the browser every %s minute(s)!' % (refresh_browser_time))
             # - Do a full review on games        
-            scheduler.add_job(trigger.UpdateSetReload, 'interval', minutes=refresh_browser_time, id='3', name='refresh_browser_time', misfire_grace_time=180)
+            scheduler.add_job(trigger.UpdateSetReload, 'interval', minutes=refresh_browser_time, id='3', name='refresh_browser_time', misfire_grace_time=900)
 
     if len(scheduler.get_jobs()) > 0:
         scheduler.start()
@@ -181,13 +181,18 @@ async def main():
                     if (len(bot_executions_work) == len(applications)) and trigger.set_work != False:
                         bot_executions_work.clear()
                         trigger.set_work = False
-                    if (len(bot_executions_reload) == len(applications)) and trigger.set_reload != False:
-                        bot_executions_reload.clear()
-                        trigger.set_reload = False
                     if (len(bot_executions_coin) == len(applications)) and trigger.set_coin != False:
                         bot_executions_coin.clear()
                         trigger.set_coin = False
-                                        
+                    if (len(bot_executions_reload) == len(applications)) and trigger.set_reload != False:
+                        bot_executions_reload.clear()
+                        bot_executions_coin.clear()
+                        bot_executions_work.clear()
+                        bot_executions_refresh.clear()
+                        trigger.set_reload = False
+                        trigger.set_coin = False
+                        trigger.set_work = False
+                        trigger.set_refresh = False
         else:
             logger.error('No account/profile found in the config.yaml file or profile do not match with profile opened, please check and restart the bot. Exiting bot...')
             os._exit(0)

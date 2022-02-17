@@ -207,7 +207,7 @@ def setup_logger(telegram_integration=False, bot_name=''):
     Function to log the steps you need.
     You can define the logging level and the file name.
     To setup as many loggers as you want.
-    '''  
+    '''
     
     if not os.path.exists(os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'logs')):
         os.mkdir(os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'logs'))
@@ -242,14 +242,14 @@ def setup_logger(telegram_integration=False, bot_name=''):
     if logger.hasHandlers():
         # Logger is already configured, remove all handlers
         logger.handlers = []
-    else:
-        logger.setLevel(level)
-        if create_logfiles != False:
-            logger.addHandler(handler)
-        logger.addHandler(consolehandler)        
-        if telegram_integration != False and telegram_token is not None:
-            telegram_handler = TelegramHandler()
-            logger.addHandler(telegram_handler)        
+    
+    logger.setLevel(level)
+    if create_logfiles != False:
+        logger.addHandler(handler)
+    logger.addHandler(consolehandler)        
+    if telegram_integration != False and telegram_token is not None:
+        telegram_handler = TelegramHandler()
+        logger.addHandler(telegram_handler)        
 
     return logger
 
