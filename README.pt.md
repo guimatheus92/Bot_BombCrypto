@@ -136,7 +136,7 @@ Escala do monitor: `100%`
 
 ###### *Atualizar heróis explicados: Bot apenas atualizará o jogo voltando ao menu e depois voltando ao modo Caça ao Tesouro*
 
-## YAML file configurations and options explained
+## Configurações e opções do arquivo YAML explicadas
 
 **1. bot_options**
 - **create_logfiles**: Você pode habilitar a criação de arquivos de log disponíveis na pasta `logs`
