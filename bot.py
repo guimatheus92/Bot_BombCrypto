@@ -28,16 +28,24 @@ async def connect_wallet(app_name=''):
     logger.info('Checking if needs to connect wallet..')
     
     ConnectWalletBtnImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'connect-wallet-btn.png')
+    ConnectBtnImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'connect-btn.png')
+
     if pyautogui.locateOnScreen(ConnectWalletBtnImg, grayscale=True, confidence=0.8) != None:
-        # The connect button is visible        
         # Move mouse in a random place first
         move_mouse_random()
         # Move to location               
         pyautogui.moveTo(pyautogui.locateOnScreen(ConnectWalletBtnImg, grayscale=True, confidence=0.8), None, np.random.uniform(0.4,0.9), pyautogui.easeInOutQuad)
         # Click on connect button
         pyautogui.click()
+        if pyautogui.locateOnScreen(ConnectBtnImg, grayscale=True, confidence=0.8) != None:
+            # Move mouse in a random place first
+            move_mouse_random()
+            # Move to location               
+            pyautogui.moveTo(pyautogui.locateOnScreen(ConnectBtnImg, grayscale=True, confidence=0.8), None, np.random.uniform(0.4,0.9), pyautogui.easeInOutQuad)
+            # Click on connect button
+            pyautogui.click()
         logger = setup_logger(telegram_integration=True, bot_name=app_name)
-        logger.info('Connect wallet button clicked..')
+        logger.info('Wallet connected!')
         await asyncio.sleep(np.random.uniform(1.5,2.5))
         return
 
@@ -135,8 +143,8 @@ async def signin_metamask(app_name=''):
             logger.info('Metamask signed..')
             # Close Metamask window
             pyautogui.hotkey('esc')
-            await asyncio.sleep(np.random.uniform(9,10))
-            # Check if treasure hunt mode is already available at screen
+            await asyncio.sleep(np.random.uniform(14,16))
+            await asyncio.create_task(go_to_heroes(app_name=app_name))
             await asyncio.create_task(send_heroes_to_work(app_name=app_name))
             return                
 
@@ -157,12 +165,12 @@ async def login_metamask(app_name=''):
     return
     
 
-async def treasure_hunt_game(refresh_only=True,app_name=''):
+async def treasure_hunt_game(refresh_only=True, app_name=''):
     '''
     Function to go the Treasure Hunt game mode.
     '''
 
-    logger = setup_logger()
+    logger = setup_logger(telegram_integration=False, bot_name=app_name)
     logger.info('Checking if Treasure Hunt game mode is available..')
 
     TreasureHuntImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'treasure-hunt-screen.png')
@@ -189,7 +197,7 @@ async def new_map(app_name=''):
     '''
 
     logger = setup_logger(telegram_integration=False, bot_name=app_name)
-    logger.info('Checking if is there any new map..')    
+    logger.info('Checking if is there any new map..')
 
     NewMapBtnImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'new-map-btn.png')
     if pyautogui.locateOnScreen(NewMapBtnImg, grayscale=True, confidence=0.8) != None:
@@ -213,8 +221,8 @@ async def send_heroes_to_work(app_name=''):
     We can use the options to choose what type of heroes or how many heroes we want to send them to work.
     '''
 
-    logger = setup_logger(telegram_integration=True,bot_name=app_name)
-    logger.info('[Work] Calling send heroes to work function..')
+    logger = setup_logger(telegram_integration=False, bot_name=app_name)
+    logger.info('Checking if needs to send heroes to work..')
 
     # Go back to menu
     await asyncio.create_task(go_back_menu(app_name=app_name))
@@ -224,15 +232,16 @@ async def send_heroes_to_work(app_name=''):
     # If character screen is available
     CharacterTittleImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'character-tittle.png')
     if pyautogui.locateOnScreen(CharacterTittleImg, grayscale=True, confidence=0.8) != None:
+        logger = setup_logger(telegram_integration=True,bot_name=app_name)
+        logger.info('[Work] Calling send heroes to work function..')
         if work_heroes_options == 'all':
             WorkAllBtn = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'work-all-btn.png')
             if pyautogui.locateOnScreen(WorkAllBtn, confidence=0.8) != None:
                 # Take Screenshot
                 path_file = take_screenshot('screenshot', 'report', 'sendheroestowork')
                 await asyncio.sleep(np.random.uniform(0.8,1.5))
-                if telegram_integration != False:
-                    # Send picture to Telegram
-                    send_telegram_pic(path_file)
+                # Send picture to Telegram
+                send_telegram_pic(path_file)
                 # Move mouse in a random place first
                 move_mouse_random()
                 # Move to location
@@ -259,7 +268,7 @@ async def close_button(app_name=''):
     Function to recognize the close button image.
     '''
 
-    logger = setup_logger()
+    logger = setup_logger(telegram_integration=False, bot_name=app_name)
     logger.info('Checking if needs to close any screen open..')
 
     CloseBtnImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'close-btn.png')
@@ -326,13 +335,15 @@ async def refresh_hereoes_positions(app_name=''):
     From this we can keep the game live without been kicked out.
     '''
 
-    logger = setup_logger(telegram_integration=True, bot_name=app_name)
-    logger.info('[Refresh] Calling refresh heroes position function..')
+    logger = setup_logger(telegram_integration=False, bot_name=app_name)
+    logger.info('Checking if needs to refresh the game..')
 
     # Go back to menu
     BackMenuImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'go-back-arrow-btn.png')
     # Go back on arrow button
     if pyautogui.locateOnScreen(BackMenuImg, grayscale=True, confidence=0.8) != None:
+        logger = setup_logger(telegram_integration=True, bot_name=app_name)
+        logger.info('[Refresh] Calling refresh heroes position function..')        
         # Move mouse in a random place first
         move_mouse_random()
         # Move to location               
@@ -370,6 +381,11 @@ async def first_start(app_name=''):
 
     # Check some routines before refresh the page
 
+    # Refresh page if game is not already logged
+    BombCryptoImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'bombcrypto-screen.png')
+    if pyautogui.locateOnScreen(BombCryptoImg, grayscale=True, confidence=0.8) != None:
+        await asyncio.create_task(reload_page(app_name=app_name))
+
     # Check if treasure hunt mode is already available at screen
     await asyncio.create_task(treasure_hunt_game(refresh_only=False, app_name=app_name))
 
@@ -379,11 +395,6 @@ async def first_start(app_name=''):
     # Check if is it possible to send heroes to work available at screen
     await asyncio.create_task(how_many_coins(app_name=app_name))    
 
-    # Refresh page if game is not already logged
-    BombCryptoImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'bombcrypto-screen.png')
-    if pyautogui.locateOnScreen(BombCryptoImg, grayscale=True, confidence=0.8) != None:
-        await asyncio.create_task(reload_page(app_name=app_name))
-
     logger.info('Exiting start function..')
 
 async def skip_error_on_game(app_name=''):
@@ -392,7 +403,7 @@ async def skip_error_on_game(app_name=''):
     It's looking only to an error message, but in case more error appears with different images, we need to add them here.
     '''
 
-    logger = setup_logger()
+    logger = setup_logger(telegram_integration=False, bot_name=app_name)
     logger.info('Checking if game has any erros or crash..')
 
     ErrorTittleImg = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'static', 'img', 'game', 'error-tittle.png')
@@ -455,10 +466,9 @@ async def how_many_coins(app_name=''):
         pyautogui.click()
         await asyncio.sleep(np.random.uniform(0.5,0.8))
         # Take screenshot of the error
-        path_file = take_screenshot('screenshot', 'report', 'coins')        
-        if telegram_integration != False:
-            # Send picture to Telegram
-            send_telegram_pic(path_file)
+        path_file = take_screenshot('screenshot', 'report', 'coins')
+        # Send picture to Telegram
+        send_telegram_pic(path_file)
         logger.info('Screenshot took from chest, you can check how many coins you have!')
         await asyncio.create_task(close_button(app_name=app_name))
         return

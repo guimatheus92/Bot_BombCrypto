@@ -25,6 +25,7 @@ def read_configurations():
 try:
     streamConfig = read_configurations()
     telegram_integration = streamConfig['telegram_options']['telegram_integration']
+    telegram_pic_integration = streamConfig['telegram_options']['telegram_pic_integration']
     telegram_token = streamConfig['telegram_options']['telegram_token']    
     telegram_chatid = streamConfig['telegram_options']['telegram_chatid']        
     create_logfiles = streamConfig['bot_options']['create_logfiles']
@@ -32,6 +33,7 @@ try:
     delete_old_folders = streamConfig['bot_options']['delete_old_folders']
     multiaccount_names = streamConfig['bot_options']['multiaccount_names']
     enable_multiaccount = streamConfig['bot_options']['enable_multiaccount']
+    create_bat = streamConfig['bot_options']['create_bat_file']
 except FileNotFoundError:
     print('Error: config.yaml file not found, make sure config.yaml are placed in the folder..')
     exit()
@@ -124,27 +126,29 @@ def send_telegram_msg(message, bot_name=''):
             chat_id = get_telegram_chat_id()
         else:
             chat_id = telegram_chatid
-        
-        TelegramBot = start_telegram()
+                
         if bot_name != '':
+            TelegramBot = start_telegram()
             TelegramBot.send_message(text='Bot (' + str(bot_name) + '): ' + message, chat_id=chat_id)
         else:
-            TelegramBot.send_message(text=message, chat_id=chat_id)
+            pass
 
 # Function to send Telegram pictures
 def send_telegram_pic(image):
     '''
     Function to send Telegram pictures
     '''
-    if telegram_integration != False:
+    if telegram_pic_integration != False:
         if telegram_chatid is None:
             chat_id = get_telegram_chat_id()
         else:
             chat_id = telegram_chatid
-        
-        TelegramBot = start_telegram()
-        TelegramBot.send_photo(chat_id=chat_id, photo=open(image, 'rb'))
-
+                
+        try:
+            TelegramBot = start_telegram()
+            TelegramBot.send_photo(chat_id=chat_id, photo=open(image, 'rb'))
+        except:
+            pass
         
 def take_screenshot(folder='', sub_folder='', info = ''):
     '''
@@ -164,18 +168,18 @@ def take_screenshot(folder='', sub_folder='', info = ''):
 
     path = os.path.join(path, time.strftime("%Y-%m-%d"))
     if not os.path.exists(path):
-        os.mkdir(path)            
+        os.mkdir(path)
     if info != '':
         info = f"_{info}"
 
     # File name        
     file = time.strftime(f"%Y-%m-%d-%H-%M-%S{info}.jpg")
-    # Take screenshot
-    myScreenshot = pyautogui.screenshot()
     path_file = os.path.join(path, file)
-    # Save screenshot
-    myScreenshot.save(path_file)
-
+    try:
+        # Save screenshot
+        pyautogui.screenshot(path_file)
+    except:
+        pass
     return path_file
 
 async def initialize_pyautogui():
@@ -189,17 +193,6 @@ async def initialize_pyautogui():
     # When fail-safe mode is True, moving the mouse to the upper-left corner will abort your program.
     pyautogui.FAILSAFE = False
     pyautogui.PAUSE = 1
-
-def run_once(f):
-    '''
-    Decorator function to run a function only once
-    '''
-    def wrapper(*args, **kwargs):
-        if not wrapper.has_run:
-            wrapper.has_run = True
-            return f(*args, **kwargs)
-    wrapper.has_run = False
-    return wrapper
 
 # Define the logging level and the file name
 def setup_logger(telegram_integration=False, bot_name=''):
@@ -236,7 +229,7 @@ def setup_logger(telegram_integration=False, bot_name=''):
                     # send_telegram_msg(message, record.levelno)    # Passing level
                     # send_telegram_msg(message, record.levelname)  # Passing level name
                 except:
-                    send_telegram_msg('Error on message!', bot_name)
+                    pass
 
     logger = logging.getLogger('logs')
     if logger.hasHandlers():
@@ -301,6 +294,19 @@ def get_browser():
         applications = [['Bot', 'BCOIN', 'None']]
         website_browser = ['Bombcrypto']
         return applications, website_browser
+
+async def create_bat_file():
+    try:
+        if create_bat != False:
+            path = os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve(), 'bot.bat')
+            with open(path, 'w+') as f:
+                f.write('cd ' + os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve()) + '\n')
+                f.write('python main.py')
+            f.close()
+            logger = setup_logger(telegram_integration=True)
+            logger.info('Bot.bat file created at ' + os.path.join(os.path.sep, pathlib.Path(__file__).parent.resolve()))
+    except:
+        pass
 
 async def countdown_timer():
     '''

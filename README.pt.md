@@ -52,6 +52,11 @@ O tutorial para usar o Brave para este bot pode ser encontrado aqui [GitHub Wiki
 
 ## Atualizações
 
+- **23/02/2022**:
+    - Pequenas correções em algumas funções
+    - Melhorado o recurso de enviar mensagens e suporte ao Telegram
+    - Criação do arquivo bat automatico
+
 - **16/02/2022**:
     - Pequenas correções em algumas funções
     - Melhorado o recurso de enviar mensagens

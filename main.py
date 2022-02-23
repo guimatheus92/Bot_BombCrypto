@@ -2,7 +2,7 @@ import os
 import asyncio
 import tzlocal
 from bot import reload_page, connect_wallet, login_metamask, treasure_hunt_game, new_map, skip_error_on_game, refresh_hereoes_positions, send_heroes_to_work, first_start, SetTrigger, how_many_coins
-from controllers import get_browser, countdown_timer, setup_logger, initialize_pyautogui, read_configurations, delete_log_files, delete_folders
+from controllers import get_browser, countdown_timer, setup_logger, initialize_pyautogui, read_configurations, delete_log_files, delete_folders, create_bat_file
 from pywinauto import Desktop
 from itertools import cycle
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -60,6 +60,9 @@ async def main():
 
     # Delete old folders
     await asyncio.create_task(delete_folders())
+
+    # Creat bat file
+    await asyncio.create_task(create_bat_file())
 
     # Countdown timer before start the bot
     await asyncio.create_task(countdown_timer())
@@ -143,14 +146,12 @@ async def main():
                         trigger.set_refresh = False
                 if refresh_heroes_only != True:                
                     # Steps of this bot:
-                    # - Login Metamask
-                    await asyncio.create_task(login_metamask(app_name=app[1]))                    
                     # - Connect Wallet on BomberCypto game                       
-                    await asyncio.create_task(connect_wallet(app_name=app[1]))
+                    await asyncio.create_task(connect_wallet(app_name=app[1]))                    
                     # - Login Metamask
                     await asyncio.create_task(login_metamask(app_name=app[1]))
                     # - Treasure Hunt game mode
-                    await asyncio.create_task(treasure_hunt_game(refresh_only=True, app_name=app[1]))   
+                    await asyncio.create_task(treasure_hunt_game(refresh_only=True, app_name=app[1]))
                     # - New map feature
                     await asyncio.create_task(new_map(app_name=app[1]))
                     # - Check for errors on game
