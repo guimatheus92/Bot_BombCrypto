@@ -52,6 +52,11 @@ The tutorial on how to use Brave browser for this bot can be found on [GitHub Wi
 
 ## Changelog
 
+- **23/02/2022**:
+    - Minor fixes in some functions
+    - Fixed the logging messages and Telegram support
+    - Create bat file automatically
+
 - **16/02/2022**:
     - Minor fixes in some functions
     - Fixed the logging messages

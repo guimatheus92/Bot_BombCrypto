@@ -75,6 +75,14 @@ bot_options:
   # Remember that refreshing the page takes time, so becarefull with the number you set
   refresh_browser_time: 60
 
+  # [en]
+  # ---- Create bat file automatically ----
+  # Default value: True
+  # Available options:
+  # True =  Create bat file automatically, so you can run faster.
+  # False = Don't create bat file automatically
+  create_bat_file: True  
+
   metamask_options:
     # [en]
     # ---- Enable login in Metamask ----
@@ -101,6 +109,14 @@ telegram_options:
   # True = Use telegram to receive messages according log process
   # False = Don't use telegram to receive messages according log process
   telegram_integration: False
+
+  # [en]
+  # ---- Telegram integration with log files ----
+  # Default value: False
+  # Available options:
+  # True = Use telegram to receive picutres according log process
+  # False = Don't use telegram to receive picutres according log process
+  telegram_pic_integration: True  
 
   # [en]
   # ---- Telegram token ----
