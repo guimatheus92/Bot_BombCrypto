@@ -116,7 +116,7 @@ telegram_options:
   # Available options:
   # True = Use telegram to receive picutres according log process
   # False = Don't use telegram to receive picutres according log process
-  telegram_pic_integration: True  
+  telegram_pic_integration: False  
 
   # [en]
   # ---- Telegram token ----
