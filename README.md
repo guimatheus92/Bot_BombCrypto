@@ -52,6 +52,9 @@ The tutorial on how to use Brave browser for this bot can be found on [GitHub Wi
 
 ## Changelog
 
+- **03/03/2022**:
+    - Added feature to connect wallet with login (username and password)
+
 - **23/02/2022**:
     - Minor fixes in some functions
     - Fixed the logging messages and Telegram support

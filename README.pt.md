@@ -52,6 +52,9 @@ O tutorial para usar o Brave para este bot pode ser encontrado aqui [GitHub Wiki
 
 ## Atualizações
 
+- **03/03/2022**:
+    - Adicionado a funcionalidade de connectar na carteira com usuario e senha
+
 - **23/02/2022**:
     - Pequenas correções em algumas funções
     - Melhorado o recurso de enviar mensagens e suporte ao Telegram

@@ -172,3 +172,23 @@ heroes_options:
   # Available options:
   # Any value starting from 5
   chest_screenshot_time: 60  
+
+  # [en]
+  # ---- BombCrypto Login ----
+  # Default value: False
+  # Available options:
+  # True = Will use the connection user name and password to connect instead of Metamask
+  # False = Will not use the login option, but it will use Metamask though
+  connect_with_login: False
+
+  # [en]
+  # ---- BombCrypto Username ----
+  # Type: String
+  # Default value: 'Example'
+  login_username: 'Example'
+
+  # [en]
+  # ---- BombCrypto Password ----
+  # Type: String
+  # Default value: 'Example'
+  login_password: 'Example'
